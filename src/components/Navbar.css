@@ -1,0 +1,57 @@
+.navbar {
+  width: 100%;
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-container {
+  /* BURASI ÇOK KRİTİK: Genişliği %100 yapıyoruz */
+  width: 100% !important;
+  max-width: 100% !important; 
+  /* Kenarlardan ne kadar boşluk istediğini buradan ayarla (Örn: 20px en dip, 80px daha içerde) */
+  padding: 0 40px !important; 
+  
+  display: flex !important;
+  /* Logoyu sola, menüyü sağa fırlatır */
+  justify-content: space-between !important; 
+  align-items: center !important;
+  height: 90px;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo-img {
+  height: 60px; /* Logo boyutunu buradan büyütebilirsin */
+  display: flex;
+  align-items: center;
+}
+
+.navbar-menu {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-menu li a {
+  text-decoration: none;
+  color: #1A2E44;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.navbar-menu li a.active,
+.navbar-menu li a:hover {
+  color: #B8860B; /* Altın sarısı */
+}

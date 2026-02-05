@@ -106,26 +106,84 @@ html, body {
 }
 
 /* ================================================= 5. MOBİL DÜZENLEME */
+/* ================================================= MOBİL DÜZENLEME (BREAKPOINT) */
 @media (max-width: 992px) {
+  /* 1. Navbar yüksekliğini mobilde yazıların sığması için otomatik yaptık */
   .navbar-container {
-      height: 90px !important; /* Mobilde daha ince bir navbar */
+      height: auto !important; 
+      min-height: 80px;
+      flex-direction: column !important; /* Logo üstte, menü altta olsun */
+      padding: 15px 0 !important;
+  }
+
+  /* 2. Logoyu mobilde merkeze alıp küçülttük */
+  .navbar-logo {
+      padding-left: 0 !important;
+      margin-bottom: 15px;
+      justify-content: center;
+      width: 100%;
   }
 
   .logo-img {
-      height: 65px !important; /* Mobilde logo makul boyuta iner */
+      height: 60px !important; /* Telefon için ideal boyut */
   }
 
   .logo-text strong {
-      font-size: 18px !important;
+      font-size: 22px !important;
   }
 
   .logo-text span {
-      font-size: 9px !important;
-      letter-spacing: 0.5px !important;
+      font-size: 10px !important;
   }
 
-  /* Mobilde menüyü gizle (Hamburger butonu ekleyeceksen display:flex yapabilirsin) */
+  /* 3. MENÜYÜ GÖRÜNÜR YAPIP KUTU (BUTON) HALİNE GETİRDİK */
+  .navbar-nav {
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0 10px !important;
+  }
+
   .navbar-menu {
-      display: none !important;
+      display: flex !important; /* Gizli olan menüyü açtık */
+      flex-direction: row !important; /* Yan yana kutular (Sığmazsa kayar) */
+      flex-wrap: wrap !important; /* Sığmayan kutuyu alta atar */
+      justify-content: center !important;
+      gap: 8px !important;
+      width: 100% !important;
+  }
+
+  .navbar-menu li {
+      flex: 1 1 45%; /* Yan yana ikişerli kutular şeklinde durur */
+      min-width: 140px;
+  }
+
+  .navbar-menu a {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      height: 45px !important; /* Kutu yüksekliği */
+      font-size: 14px !important; /* Mobilde okunaklı küçük yazı */
+      font-weight: 700 !important;
+      color: #1a2e44 !important;
+      background: #f8f9fa !important; /* Hafif gri kutu arka planı */
+      border: 1px solid #ddd !important;
+      border-radius: 6px !important;
+      padding: 0 !important;
+      text-align: center;
+  }
+
+  /* Aktif sayfa veya hover durumu için kutu rengini değiştir */
+  .navbar-menu a:active, .navbar-menu a.active {
+      background: #1a2e44 !important;
+      color: #ffffff !important;
+      border-color: #1a2e44 !important;
+  }
+
+  /* İletişim kutusuna altın sarısı vurgu yapalım */
+  .navbar-menu li:last-child a {
+      background: #b8860b !important;
+      color: #fff !important;
+      border-color: #b8860b !important;
+      padding-right: 0 !important; /* Köşeye yaslanma mobilde kutu içinde sıfırlanır */
   }
 }

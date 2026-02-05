@@ -55,3 +55,43 @@
 .navbar-menu li a:hover {
   color: #B8860B; /* Altın sarısı */
 }
+/* ===== MOBILE FIX (iPhone küçülme/sağa boşluk sorunu) ===== */
+@media (max-width: 900px) {
+  .navbar-container {
+    padding: 0 16px !important;   /* 40px -> 16px */
+    height: 72px;                 /* 90px -> 72px */
+  }
+
+  .logo-img {
+    height: 48px;                 /* 60px -> 48px */
+    max-width: 180px;             /* çok büyürse taşmasın */
+    object-fit: contain;
+  }
+
+  .navbar-menu {
+    gap: 12px;                    /* 30px -> 12px */
+  }
+
+  .navbar-menu li a {
+    font-size: 14px;              /* 16px -> 14px */
+    white-space: nowrap;          /* kelimeler alt satıra kırılmasın */
+  }
+}
+
+/* Menü yine de sığmazsa: taşmadan yatay kaydır (en pratik çözüm) */
+@media (max-width: 520px) {
+  .navbar-container {
+    padding: 0 12px !important;
+  }
+
+  .navbar-menu {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 10px;
+    padding-bottom: 6px;          /* scroll bar payı */
+    scrollbar-width: none;        /* Firefox */
+  }
+  .navbar-menu::-webkit-scrollbar {
+    display: none;                /* Chrome/Safari */
+  }
+}

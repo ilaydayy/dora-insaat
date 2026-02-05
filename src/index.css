@@ -69,3 +69,29 @@ a {
   color: var(--white);
   border-color: #D4AF37;
 }
+/* ===== iPhone/Safari: sayfa küçük + sağ boşluk (overflow) FIX ===== */
+html, body, #root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  -webkit-text-size-adjust: 100%; /* iOS font zoom saçmalamasını azaltır */
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+img, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* flex item overflow bug fix (özellikle header/nav) */
+* {
+  min-width: 0;
+}
+html, body, #root { max-width: 100%; overflow-x: hidden; }

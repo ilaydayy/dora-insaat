@@ -38,7 +38,7 @@ const Contact = () => {
               <div className="info-icon">✉️</div>
               <div className="info-text">
                 <h3>E-posta</h3>
-                <p>info@dorainsaat.com</p>
+                <p>info@dorainsaat.net.tr</p>
               </div>
             </div>
 

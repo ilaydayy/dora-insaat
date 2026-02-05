@@ -28,17 +28,14 @@ const Navbar: React.FC = () => {
     <header className={`navbar ${solid ? "is-solid" : ""}`}>
       <div className="navbar-container">
         {/* LOGO */}
-        <NavLink to="/" className="navbar-logo" onClick={() => setOpen(false)}>
-          <img
-            className="logo-img"
-            src="/logo.png"   {/* LOGO BURADA */}
-            alt="Dora İnşaat"
-          />
-          <div className="logo-text">
-            <strong>DORA İNŞAAT</strong>
-            <span>Kaliteli İnşaat Hizmetleri</span>
-          </div>
-        </NavLink>
+      <NavLink to="/" className="navbar-logo" onClick={() => setOpen(false)}>
+  <img src="/images/logo.png" alt="Dora İnşaat" className="logo-img" />
+
+  <div className="logo-text">
+    <strong>DORA İNŞAAT</strong>
+    <span>KALİTELİ İNŞAAT HİZMETLERİ</span>
+  </div>
+</NavLink>
 
         {/* DESKTOP MENU */}
         <nav aria-label="Ana menü">

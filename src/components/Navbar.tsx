@@ -4,7 +4,19 @@ import "./Navbar.css";
 
 const Navbar: React.FC = () => {
   const [open, setOpen] = useState(false);
+  const [solid, setSolid] = useState(false);
 
+  // Scroll olunca navbar beyaz olsun
+  useEffect(() => {
+    const onScroll = () => {
+      setSolid(window.scrollY > 10);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Mobile menu açıkken scroll kilidi
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
@@ -13,46 +25,54 @@ const Navbar: React.FC = () => {
   }, [open]);
 
   return (
-    <header className="navbar">
+    <header className={`navbar ${solid ? "is-solid" : ""}`}>
       <div className="navbar-container">
+        {/* LOGO */}
         <NavLink to="/" className="navbar-logo" onClick={() => setOpen(false)}>
-          {/* logo yolunu senin projene göre ayarla */}
-     <img className="logo-img" src="/images/logo.png" alt="Dora İnşaat" />
+          <img
+            className="logo-img"
+            src="/logo.png"   {/* LOGO BURADA */}
+            alt="Dora İnşaat"
+          />
+          <div className="logo-text">
+            <strong>DORA İNŞAAT</strong>
+            <span>Kaliteli İnşaat Hizmetleri</span>
+          </div>
         </NavLink>
 
-        {/* Desktop menu */}
-        <nav className="navbar-nav" aria-label="Ana menü">
+        {/* DESKTOP MENU */}
+        <nav aria-label="Ana menü">
           <ul className="navbar-menu">
             <li>
-              <NavLink to="/" className={({ isActive }) => (isActive ? "active" : "")}>
+              <NavLink to="/" end>
                 Ana Sayfa
               </NavLink>
             </li>
             <li>
-              <NavLink to="/projeler" className={({ isActive }) => (isActive ? "active" : "")}>
+              <NavLink to="/projeler">
                 Projelerimiz
               </NavLink>
             </li>
             <li>
-              <NavLink to="/hakkimizda" className={({ isActive }) => (isActive ? "active" : "")}>
+              <NavLink to="/hakkimizda">
                 Hakkımızda
               </NavLink>
             </li>
             <li>
-              <NavLink to="/iletisim" className={({ isActive }) => (isActive ? "active" : "")}>
+              <NavLink to="/iletisim">
                 İletişim
               </NavLink>
             </li>
           </ul>
         </nav>
 
-        {/* Mobile hamburger */}
+        {/* HAMBURGER */}
         <button
           className="navbar-toggle"
           type="button"
           aria-label="Menüyü aç/kapat"
           aria-expanded={open}
-          onClick={() => setOpen((s) => !s)}
+          onClick={() => setOpen(!open)}
         >
           <span className="bar" />
           <span className="bar" />
@@ -60,13 +80,22 @@ const Navbar: React.FC = () => {
         </button>
       </div>
 
-      {/* Mobile drawer */}
+      {/* MOBILE DRAWER */}
       {open && (
-        <div className="navbar-drawer-backdrop" onClick={() => setOpen(false)} role="presentation">
-          <div className="navbar-drawer" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
+        <div
+          className="navbar-drawer-backdrop"
+          onClick={() => setOpen(false)}
+        >
+          <div
+            className="navbar-drawer"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="drawer-header">
               <span>Menü</span>
-              <button className="drawer-close" onClick={() => setOpen(false)} aria-label="Kapat" type="button">
+              <button
+                className="drawer-close"
+                onClick={() => setOpen(false)}
+              >
                 ✕
               </button>
             </div>

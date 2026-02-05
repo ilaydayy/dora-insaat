@@ -1,14 +1,21 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import "./Projects.css";
 
+type Amenity = {
+  icon: string;
+  label: string;
+};
+
 type Project = {
   id: number;
   title: string;
   category: string;
   location: string;
   details: string;
-  images: string[]; // <-- artık tek image değil, galeri
+  images: string[];
   icon: string;
+  imagePosition?: string;
+  amenities: Amenity[];
 };
 
 const projects: Project[] = [
@@ -23,25 +30,21 @@ const projects: Project[] = [
       "/images/LUKS.jpeg",
       "/images/LUKS VILLA.jpeg",
       "/images/LUKS (2).jpeg",
-    ],
-    icon: "🌴",
-  },
-  {
-    id: 2,
-    title: "KAVSUT GRUP",
-    category: "Modern Yaşam Kompleksi",
-    location: "Antalya, Aksu",
-    details: "1+1'den 4.5+1'e • 80-200 m²",
-    images: [
-      "/images/KAVSUT GRUP.jpeg",
       "/images/INSAAT.jpeg",
       "/images/COMP.jpeg",
       "/images/COMPANY.jpeg",
     ],
-    icon: "🏙️",
+    icon: "🌴",
+    imagePosition: "center",
+    amenities: [
+      { icon: "🏊‍♂️", label: "Havuz" },
+      { icon: "🚗", label: "Otopark" },
+      { icon: "🛡️", label: "Güvenlik" },
+      { icon: "🌿", label: "Peyzaj" },
+    ],
   },
   {
-    id: 3,
+    id: 2,
     title: "DORA REZİDANS",
     category: "Şehir Merkezi",
     location: "Antalya, Aksu",
@@ -50,12 +53,19 @@ const projects: Project[] = [
       "/images/INS.jpeg",
       "/images/COMPANYY.jpeg",
       "/images/COMMPANY.jpeg",
-      "/images/COMPANYY.jpeg",
+      "/images/COMPANY.jpeg",
     ],
     icon: "💎",
+    imagePosition: "center",
+    amenities: [
+      { icon: "🏙️", label: "Merkezi" },
+      { icon: "🛡️", label: "Güvenlik" },
+      { icon: "🛗", label: "Asansör" },
+      { icon: "🅿️", label: "Otopark" },
+    ],
   },
   {
-    id: 4,
+    id: 3,
     title: "DORA MODERN KONUT",
     category: "Modern Mimari",
     location: "Antalya, Aksu",
@@ -63,46 +73,36 @@ const projects: Project[] = [
     images: [
       "/images/LUKSS.jpeg",
       "/images/LUKSSS.jpeg",
-      "/images/COMPANY.jpeg",
       "/images/INSAAT.jpeg",
+      "/images/COMPANY.jpeg",
     ],
     icon: "🏠",
+    imagePosition: "center",
+    amenities: [
+      { icon: "🏊‍♂️", label: "Havuz" },
+      { icon: "🌿", label: "Bahçe" },
+      { icon: "🅿️", label: "Otopark" },
+      { icon: "🛡️", label: "Güvenlik" },
+    ],
   },
 ];
 
 const premiumTexts: Record<number, string> = {
-  1: `OASIS HILL, modern mimarinin zarafetle buluştuğu,
-seçkin bir yaşam projesidir.
+  1: `OASIS HILL, modern mimarinin zarafetle buluştuğu seçkin bir yaşam projesidir.
 
-2+1’den 5+1’e kadar farklı daire seçenekleri,
-120 – 280 m² aralığında geniş ve ferah yaşam alanları.
+2+1’den 5+1’e kadar farklı daire seçenekleri ile 120 – 280 m² aralığında ferah yaşam alanları sunar.
 
-Antalya Aksu’daki konumu sayesinde hem huzurlu bir yaşam
-hem de yüksek yatırım değeri sunar.`,
-  2: `KAVSUT GRUP, modern şehir hayatını konforla birleştiren
-çağdaş bir yaşam kompleksidir.
+Konumu ve planlaması sayesinde hem huzurlu bir yaşam hem de güçlü yatırım değeri hedeflenmiştir.`,
+  2: `DORA REZİDANS, şehir merkezine yakın konumuyla prestijli bir yaşam anlayışını temsil eder.
 
-1+1’den 4.5+1’e kadar fonksiyonel daire tipleri,
-80 – 200 m² aralığında verimli ve şık planlamalar.
+3+1 ve 4.5+1 daire seçenekleri ile 180 – 350 m² aralığında geniş ve konforlu alanlar sunar.
 
-Sosyal alanları ve ulaşım avantajlarıyla hem yaşam hem
-yatırım için ideal bir projedir.`,
-  3: `DORA REZİDANS, şehir merkezinde prestijli bir yaşam
-arayışında olanlar için tasarlanmıştır.
+Şehir hayatının içinde, yüksek standartlarda bir yaşam ve yatırım fırsatı sağlar.`,
+  3: `DORA MODERN KONUT, modern mimari çizgisiyle fonksiyonel ve dengeli bir yaşam sunar.
 
-3+1 ve 4.5+1 daire seçenekleri,
-180 – 350 m² aralığında geniş ve yüksek konforlu alanlar.
+2+1 ve 3+1 seçenekleri ile 90 – 150 m² aralığında verimli planlara sahiptir.
 
-Merkezi konumu sayesinde güçlü bir yatırım değeri ve
-ayrıcalıklı bir yaşam sunar.`,
-  4: `DORA MODERN KONUT, modern mimari anlayışıyla
-rahat ve dengeli bir yaşam sunar.
-
-2+1 ve 3+1 daire seçenekleri,
-90 – 150 m² aralığında fonksiyonel ve kullanışlı planlar.
-
-Sakin lokasyonu ve ulaşım kolaylığıyla yaşam kalitesini
-ön planda tutar.`,
+Sakin lokasyonu, tasarım dili ve sosyal imkanlarıyla yaşam kalitesini yükseltir.`,
 };
 
 const encodeSrc = (src: string) => encodeURI(src);
@@ -135,7 +135,6 @@ const Projects: React.FC = () => {
     setImgIndex((i) => (i - 1 + selectedProject.images.length) % selectedProject.images.length);
   }, [selectedProject]);
 
-  // ESC + ok tuşları + scroll lock
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeModal();
@@ -192,11 +191,16 @@ const Projects: React.FC = () => {
                       src={encodeSrc(cover)}
                       alt={project.title}
                       loading="lazy"
+                      style={{
+                        objectFit: "cover",
+                        objectPosition: project.imagePosition ?? "center",
+                      }}
                       onError={(e) => {
-                        e.currentTarget.src = encodeSrc("/images/COMPANY.jpeg");
+                        (e.currentTarget as HTMLImageElement).src = encodeSrc("/images/COMPANY.jpeg");
                       }}
                     />
                     <div className="project-badge">{project.category}</div>
+
                     <div className="project-overlay">
                       <span className="project-overlay-text">Detayları Gör</span>
                     </div>
@@ -211,6 +215,18 @@ const Projects: React.FC = () => {
                     </div>
 
                     <p className="project-location">📍 {project.location}</p>
+
+                    <div className="project-amenities">
+                      {project.amenities.slice(0, 4).map((a) => (
+                        <span key={a.label} className="amenity-pill">
+                          <span className="amenity-ic" aria-hidden="true">
+                            {a.icon}
+                          </span>
+                          {a.label}
+                        </span>
+                      ))}
+                    </div>
+
                     <div className="project-info-tag">{project.details}</div>
 
                     <button
@@ -227,6 +243,32 @@ const Projects: React.FC = () => {
                 </div>
               );
             })}
+          </div>
+
+          {/* CTA BAND (grid altı) */}
+          <div className="projects-cta">
+            <div className="projects-cta-inner">
+              <div className="projects-cta-text">
+                <h2>Ücretsiz bilgi & teklif alın</h2>
+                <p>Aynı gün dönüş • Proje detayları • Uygun ödeme seçenekleri</p>
+              </div>
+              <div className="projects-cta-actions">
+                <a
+                  className="cta-btn cta-whatsapp"
+                  href="https://wa.me/905533906832?text=Merhaba%2C%20projeleriniz%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum."
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  💬 WhatsApp
+                </a>
+                <a className="cta-btn cta-outline" href="tel:+905533906832">
+                  📞 Ara
+                </a>
+                <a className="cta-btn cta-soft" href="mailto:info@dorainsaat.com">
+                  ✉️ E-posta
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -252,11 +294,19 @@ const Projects: React.FC = () => {
                 src={encodeSrc(selectedProject.images[imgIndex])}
                 alt={`${selectedProject.title} görsel ${imgIndex + 1}`}
                 onError={(e) => {
-                  e.currentTarget.src = encodeSrc("/images/COMPANY.jpeg");
+                  (e.currentTarget as HTMLImageElement).src = encodeSrc("/images/COMPANY.jpeg");
                 }}
               />
 
+              {/* premium gradient */}
+              <div className="media-gradient" aria-hidden="true" />
+
               <div className="modal-badge">{selectedProject.category}</div>
+
+              {/* sayaç */}
+              <div className="gallery-counter">
+                {imgIndex + 1}/{selectedProject.images.length}
+              </div>
 
               {selectedProject.images.length > 1 && (
                 <>
@@ -283,13 +333,7 @@ const Projects: React.FC = () => {
                     ›
                   </button>
 
-                  <div className="gallery-dots" aria-hidden="true">
-                    {selectedProject.images.map((_, i) => (
-                      <span key={i} className={`dot ${i === imgIndex ? "active" : ""}`} />
-                    ))}
-                  </div>
-
-                  <div className="gallery-thumbs">
+                  <div className="gallery-thumbs" aria-label="Görsel küçük resimler">
                     {selectedProject.images.map((src, i) => (
                       <button
                         key={src + i}
@@ -322,6 +366,14 @@ const Projects: React.FC = () => {
 
               <div className="modal-pill">{selectedProject.details}</div>
 
+              <div className="modal-amenities">
+                {selectedProject.amenities.map((a) => (
+                  <span key={a.label} className="amenity-chip">
+                    <span aria-hidden="true">{a.icon}</span> {a.label}
+                  </span>
+                ))}
+              </div>
+
               <p className="modal-text">{(premiumTexts[selectedProject.id] ?? "").trim()}</p>
 
               <div className="contact-actions">
@@ -332,10 +384,7 @@ const Projects: React.FC = () => {
                   className="contact-btn contact-whatsapp"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <span className="contact-emoji" aria-hidden="true">
-                    💬
-                  </span>
-                  WhatsApp’tan Yaz
+                  💬 WhatsApp’tan Yaz
                 </a>
 
                 <a
@@ -343,10 +392,7 @@ const Projects: React.FC = () => {
                   className="contact-btn contact-outline"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <span className="contact-emoji" aria-hidden="true">
-                    📞
-                  </span>
-                  Ara
+                  📞 Ara
                 </a>
 
                 <a
@@ -354,10 +400,7 @@ const Projects: React.FC = () => {
                   className="contact-btn contact-soft"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <span className="contact-emoji" aria-hidden="true">
-                    ✉️
-                  </span>
-                  E-posta
+                  ✉️ E-posta
                 </a>
               </div>
 

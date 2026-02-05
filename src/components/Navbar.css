@@ -27,9 +27,14 @@
 }
 
 .logo-img {
-  height: 56px;
+  height: 58px;
   width: auto;
   display: block;
+  transition: transform 0.3s ease;
+}
+
+.logo-img:hover {
+  transform: scale(1.05);
 }
 
 .navbar-menu {

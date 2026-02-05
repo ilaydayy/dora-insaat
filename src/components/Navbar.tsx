@@ -17,7 +17,7 @@ const Navbar: React.FC = () => {
       <div className="navbar-container">
         <NavLink to="/" className="navbar-logo" onClick={() => setOpen(false)}>
           {/* logo yolunu senin projene göre ayarla */}
-          <img className="logo-img" src="/logo.svg" alt="Dora İnşaat" />
+     <img className="logo-img" src="/logo.png" alt="Dora İnşaat" />
         </NavLink>
 
         {/* Desktop menu */}

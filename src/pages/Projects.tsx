@@ -264,7 +264,7 @@ const Projects: React.FC = () => {
                 <a className="cta-btn cta-outline" href="tel:+905533906832">
                   📞 Ara
                 </a>
-                <a className="cta-btn cta-soft" href="mailto:info@dorainsaat.com">
+                <a className="cta-btn cta-soft" href="mailto:info@dorainsaat.net.tr">
                   ✉️ E-posta
                 </a>
               </div>
@@ -396,7 +396,7 @@ const Projects: React.FC = () => {
                 </a>
 
                 <a
-                  href="mailto:info@dorainsaat.com"
+                  href="mailto:info@dorainsaat.net.tr"
                   className="contact-btn contact-soft"
                   onClick={(e) => e.stopPropagation()}
                 >

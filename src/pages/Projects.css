@@ -1,9 +1,18 @@
+/* HERO – genel (desktop + mobil ortak) */
+.projects-hero {
+  background:
+    linear-gradient(rgba(26,42,58,.72), rgba(26,42,58,.72)),
+    url("/images/COMPANY.jpeg");
+  background-size: cover;
+  background-position: center;
+}
+
+/* MOBİL AYARLAR */
 @media (max-width: 768px) {
   .projects-hero {
-    min-height: 100vh;   /* fallback */
-    height: 100svh;      /* modern mobil */
-    height: 100dvh;      /* iOS 16+ */
-    padding-top: 80px;
+    height: 42vh;        /* iPhone beyaz boşluk sorunu biter */
+    min-height: 280px;  /* çok küçülmesin */
+    padding-top: 0;
   }
 
   .projects-hero h1 {

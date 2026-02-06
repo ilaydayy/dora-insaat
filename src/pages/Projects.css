@@ -87,99 +87,99 @@
 /* ================================================= 3. ÜCRETSİZ BİLGİ & TEKLİF BANDI (CTA) */
 /* ================================================= 1. CTA BANDI (TEKLİF ALIN ALANI) */
 .projects-cta {
-  margin: 40px auto 20px;
-  padding: 30px 40px; /* Daha kibar padding */
-  border-radius: 20px;
-  background: #1a2a3a; /* Safari eski sürümleri için düz renk */
+  margin: 60px auto 30px;
+  padding: 35px 50px; /* Yükseklik azaltıldı */
+  border-radius: 20px; /* Daha keskin olmayan, kibar bir kavis */
   background: linear-gradient(135deg, #1a2a3a 0%, #16222d 100%);
   color: #fff;
   max-width: 100%;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  
-  /* iOS Taşma Engelleme */
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 }
 
 .projects-cta-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 25px;
-  flex-wrap: wrap; /* Mobilde otomatik kırılma */
+  gap: 30px;
 }
 
 .projects-cta-text h2 {
-  font-size: 1.6rem;
+  font-size: 1.8rem; /* Boyut küçültüldü */
   font-weight: 800;
+  color: #fff;
   margin: 0 0 5px;
-  -webkit-font-smoothing: antialiased; /* iOS yazı netleştirme */
+  letter-spacing: -0.5px;
 }
 
 .projects-cta-text p {
-  font-size: 0.95rem;
-  color: rgba(255,255,255,0.75);
+  font-size: 1rem; /* Daha kibar font boyutu */
+  color: rgba(255,255,255,0.7);
   margin: 0;
+  font-weight: 400;
 }
 
-/* ================================================= 2. İLETİŞİM BUTONLARI (KİBAR & DOKUNMATİK) */
+/* ================================================= 2. İLETİŞİM BUTONLARI (KİBAR) */
 .projects-cta-actions {
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .cta-btn {
-  padding: 10px 20px;
+  padding: 12px 22px; /* Butonlar küçültüldü */
   border-radius: 12px;
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  transition: all 0.25s ease;
   text-decoration: none;
-  transition: all 0.2s ease;
-  
-  /* iOS Buton Parlama & Default Stil Temizliği */
-  -webkit-appearance: none;
-  -webkit-tap-highlight-color: transparent;
 }
 
 .cta-whatsapp {
   background: #25D366;
-  color: #fff !important;
+  color: #fff;
+}
+
+.cta-whatsapp:hover {
+  background: #1eb956;
+  transform: translateY(-3px);
 }
 
 .cta-soft {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff !important;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  /* Safari Buzlu Cam Efekti */
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-/* ================================================= 3. PROJE ETİKETLERİ (BADGE) */
+.cta-soft:hover {
+  background: #fff;
+  color: #1a2a3a;
+  transform: translateY(-3px);
+}
+
+/* ================================================= 3. PROJE ETİKETLERİ (BADGE - KİBAR) */
 .project-badge {
   position: absolute;
   top: 15px;
   left: 15px;
-  background: #D4AF37;
+  background: #D4AF37; 
   color: #fff;
-  padding: 5px 12px;
+  padding: 6px 14px; /* Etiket küçültüldü */
   border-radius: 8px;
   font-weight: 800;
-  font-size: 0.7rem;
-  z-index: 10;
-  text-transform: uppercase;
+  font-size: 0.75rem; /* Yazı küçültüldü */
+  z-index: 5;
+  letter-spacing: 0.3px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-/* ================================================= 4. ÖZEL MOBİL (iOS DAHİL) */
+/* ================================================= 4. MOBİL DÜZENLEME (ZARİF GEÇİŞ) */
 @media (max-width: 992px) {
   .projects-cta {
-      padding: 25px 20px;
-      margin: 30px 15px;
+      padding: 30px 20px;
+      margin: 40px 10px 20px;
   }
 
   .projects-cta-inner {
@@ -188,29 +188,24 @@
       gap: 20px;
   }
 
+  .projects-cta-text h2 {
+      font-size: 1.5rem;
+  }
+
   .projects-cta-actions {
       width: 100%;
       justify-content: center;
-      /* Mobilde yan yana sığması için */
-      display: grid;
-      grid-template-columns: 1fr 1fr; 
   }
   
   .cta-btn {
-      justify-content: center;
-      padding: 12px 10px;
-      font-size: 0.8rem;
+      flex: 1; /* Butonlar mobilde yan yana kibar durur */
+      padding: 10px 15px;
   }
 }
 
 @media (max-width: 480px) {
   .projects-cta-actions {
-      /* Çok küçük ekranlarda butonları alt alta alalım ki yazı taşmasın */
-      grid-template-columns: 1fr;
-  }
-  
-  .projects-cta-text h2 {
-      font-size: 1.4rem;
+      flex-direction: column; /* Çok küçük ekranlarda alt alta */
   }
 }
 
